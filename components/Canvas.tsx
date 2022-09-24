@@ -3,6 +3,7 @@ import { styled } from "../stitches.config";
 import DuskOverlay from "./DuskOverlay";
 import { useGlobalState } from "../context/GlobalState";
 import Sky from "./Sky";
+import Sun from "./Sun";
 
 const Container = styled("div", {
     width: "$canvas",
@@ -24,11 +25,15 @@ const Canvas = ({ children }: CanvasType) => {
     }, []);
 
     return (
+        <>
         <Container>
+            <Sun />
+
             <Sky />
             <DuskOverlay />
             {children}
         </Container>
+        </>
     );
 };
 

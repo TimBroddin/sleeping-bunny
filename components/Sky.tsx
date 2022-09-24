@@ -13,7 +13,7 @@ const SkyBox = styled("div", {
 });
 
 const Sky = () => {
-    const { sunState } = useGlobalState();
+    const { sunState, sunPercentage } = useGlobalState();
     const backgrounds = {
         up: "linear-gradient(180deg, rgba(75,129,149,1) 0%, rgba(113,171,242,1) 30%, rgba(53,198,227,1) 100%)",
         down: "linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,59,121,1) 69%, rgba(0,0,0,1) 100%)",
@@ -22,7 +22,7 @@ const Sky = () => {
             "linear-gradient(180deg, rgba(149,96,75,1) 0%, rgba(9,59,121,1) 68%, rgba(0,0,0,1) 100%)",
     };
 
-    return <SkyBox css={{ background: backgrounds[sunState] }} />;
+    return <SkyBox css={{ background: backgrounds[sunState] }}>{sunPercentage}</SkyBox>;
 };
 
 export default Sky;

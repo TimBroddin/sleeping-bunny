@@ -6,7 +6,7 @@ const DebugPanel = styled("div", {
 });
 
 const Debug = () => {
-    const { setSunState, sunState } = useGlobalState();
+    const { setSunState, sunState, setSunPercentage, sunPercentage } = useGlobalState();
     const states = ["rising", "up", "down", "setting"];
 
     return (
@@ -25,6 +25,8 @@ const Debug = () => {
                     </div>
                 );
             })}
+
+            <input type="range" min={0} max={100} step={1} onChange={e => { setSunPercentage(parseInt(e.currentTarget.value)/100); }} value={sunPercentage*100} />
         </DebugPanel>
     );
 };

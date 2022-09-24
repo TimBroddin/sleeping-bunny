@@ -6,6 +6,8 @@ interface GlobalStateType {
     sunState: sunStateType;
     setSunState: Function;
     fetchSunState: Function;
+    sunPercentage: number;
+    setSunPercentage: Function;
 }
 
 const GlobalStateContext = React.createContext({
@@ -21,6 +23,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export function GlobalStateProvider(props: GlobalStateProviderType) {
     // we'll update here
     const [sunState, setSunState] = React.useState<sunStateType>("up");
+    const [sunPercentage, setSunPercentage] = React.useState<number>(0);
 
     const fetchSunState = async () => {
         const res = await fetch(
@@ -44,18 +47,15 @@ export function GlobalStateProvider(props: GlobalStateProviderType) {
             ) {
                 sunState = "setting";
             } else {
-                console.log(
-                    d,
-                    civil_twilight_begin,
-                    sunrise,
-                    sunset,
-                    civil_twilight_end
-                );
                 sunState = "down";
             }
         }
 
         setSunState(sunState);
+
+        const timeSinceSunrise = new Date().getTime() - new Date(sunrise).getTime();
+        const lightTime = new Date(sunset).getTime() - new Date(sunrise).getTime();
+        setSunPercentage((timeSinceSunrise/lightTime));
     };
 
     const value = React.useMemo(
@@ -63,8 +63,10 @@ export function GlobalStateProvider(props: GlobalStateProviderType) {
             sunState,
             setSunState,
             fetchSunState,
+            sunPercentage,
+            setSunPercentage
         }),
-        [sunState, setSunState]
+        [sunState, sunPercentage, setSunState]
     );
 
     return (
